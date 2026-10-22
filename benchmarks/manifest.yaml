@@ -1,0 +1,30 @@
+#任务目录
+#manifest-|
+#         |-task1 单个任务
+#         |-task2
+
+version: 1
+suite: repofix-development
+language: python
+test_framework: pytest
+tasks:
+  - id: pagination-zero-page-size
+    config: tasks/pagination-zero-page-size/task.yaml
+    category: parameter-validation
+    status: ready
+  - id: display-name-none
+    config: tasks/display-name-none/task.yaml
+    category: null-handling
+    status: ready
+  - id: shipping-member-rule
+    config: tasks/shipping-member-rule/task.yaml
+    category: conditional-logic
+    status: ready
+  - id: setting-key-casefold
+    config: tasks/setting-key-casefold/task.yaml
+    category: cross-function-normalization
+    status: ready
+  - id: asset-path-traversal
+    config: tasks/asset-path-traversal/task.yaml
+    category: path-validation
+    status: ready

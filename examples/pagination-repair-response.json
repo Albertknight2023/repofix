@@ -1,0 +1,8 @@
+{
+  "status": "patch",
+  "target_file": "src/pagination.py",
+  "target_symbol": "paginate",
+  "replacement_source": "def paginate(items: Sequence[T], page: int, page_size: int) -> list[T]:\n    \"\"\"Return one 1-indexed page from *items*.\n\n    ``page`` must be at least 1. The function is also expected to reject a\n    non-positive ``page_size``, but the initial benchmark version contains a\n    bug in that validation path.\n    \"\"\"\n\n    if page < 1:\n        raise ValueError(\"page must be greater than or equal to 1\")\n\n    if page_size <= 0:\n        raise ValueError(\"page_size must be greater than 0\")\n\n    # Calculating the page count before validating page_size causes the target\n    # ZeroDivisionError when page_size is 0.\n    total_pages = (len(items) + page_size - 1) // page_size\n    if items and page > total_pages:\n        return []\n\n    start = (page - 1) * page_size\n    end = start + page_size\n    return list(items[start:end])\n",
+  "explanation": "在除法前校验 page_size，保持其他分页路径。",
+  "evidence_ids": ["F1", "L1", "S1", "T1"]
+}

@@ -1,0 +1,21 @@
+id: bugsinpy-tqdm-4
+title: 'BugsInPy tqdm #4'
+language: python
+test_framework: pytest
+issue: Formatting an iterator with unknown total and a numeric unit_scale should not
+  multiply None; the generated count should still be scaled.
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tqdm/tests/tests_tqdm.py::test_nototal
+full_test_command: python -m pytest tqdm/tests/tests_tqdm.py::test_nototal ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- tqdm/_tqdm.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:tqdm-py38

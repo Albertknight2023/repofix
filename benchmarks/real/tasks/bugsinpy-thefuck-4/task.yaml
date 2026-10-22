@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-4
+title: 'BugsInPy thefuck #4'
+language: python
+test_framework: pytest
+issue: fish 别名输出为空或使用等号分隔时，解析器仍应正确返回别名集合，不应拆分失败。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_get_aliases
+full_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_get_aliases
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/shells/fish.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

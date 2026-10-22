@@ -1,0 +1,20 @@
+id: bugsinpy-tqdm-7
+title: 'BugsInPy tqdm #7'
+language: python
+test_framework: pytest
+issue: CLI argument parsing should not treat a hyphen inside a value as a new option
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tqdm/tests/tests_main.py::test_main
+full_test_command: python -m pytest tqdm/tests/tests_main.py::test_main ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- tqdm/_main.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:py38

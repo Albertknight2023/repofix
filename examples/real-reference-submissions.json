@@ -1,0 +1,39 @@
+{
+  "submissions": [
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-1",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-1/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-4",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-4/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-5",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-5/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-6",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-6/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-7",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-7/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-tqdm-8",
+      "patch": "../benchmarks/real/tasks/bugsinpy-tqdm-8/solution.patch"
+    },
+    {
+      "method": "fixture-reference-not-a-model",
+      "task_id": "bugsinpy-PySnooper-3",
+      "patch": "../benchmarks/real/tasks/bugsinpy-PySnooper-3/solution.patch"
+    }
+  ]
+}

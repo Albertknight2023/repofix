@@ -1,0 +1,21 @@
+id: shipping-member-rule
+title: 会员免运费条件错误
+language: python
+test_framework: pytest
+issue: >-
+  shipping_fee 对非负订单金额计费：会员或订单金额达到 100 元时运费为 0，
+  否则为 10 元；负数金额应抛出 ValueError。当前低金额会员仍被收取运费。
+repo_path: repo
+public_test_command: python -m pytest tests -q
+full_test_command: python -m pytest tests ../grader_tests -q
+grader_test_path: grader_tests
+timeout_seconds: 120
+allowed_edit_paths:
+  - src/
+protected_paths:
+  - tests/
+  - ../grader_tests/
+  - ../reference/
+  - ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED

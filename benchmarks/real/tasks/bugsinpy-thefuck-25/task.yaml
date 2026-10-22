@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-25
+title: 'BugsInPy thefuck #25'
+language: python
+test_framework: pytest
+issue: mkdir 位于复合命令中而非行首时，修复规则也应正确添加 -p 参数。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_mkdir_p.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_mkdir_p.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/mkdir_p.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "tqdm",
+  "bug_id": 8,
+  "upstream_url": "https://github.com/tqdm/tqdm",
+  "buggy_commit": "08b8ad1ff3bd003ef8309faaa0cc108ffa40317d",
+  "fixed_commit": "cae9d139c6df5614be3bf6e25ccbd600ee3286dc",
+  "declared_python_version": "3.6.9",
+  "upstream_trigger": "python3 -m pytest tqdm/tests/tests_tqdm.py::test_format_meter",
+  "benchmark_status": "reproduced_buggy_failed_fixed_passed",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

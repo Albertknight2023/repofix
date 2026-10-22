@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-22
+title: 'BugsInPy thefuck #22'
+language: python
+test_framework: pytest
+issue: 排序后的修复命令列表缓存为空时，不能直接读取第一个元素导致索引错误。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/test_types.py::TestSortedCorrectedCommandsSequence::test_with_blank
+full_test_command: python -m pytest tests/test_types.py::TestSortedCorrectedCommandsSequence::test_with_blank
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/types.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-14
+title: 'BugsInPy thefuck #14'
+language: python
+test_framework: pytest
+issue: fish 覆盖别名应保留默认别名并加入环境变量指定的自定义别名。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_get_overridden_aliases
+full_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_get_overridden_aliases
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/shells/fish.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

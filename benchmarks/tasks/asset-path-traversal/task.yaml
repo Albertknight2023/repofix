@@ -1,0 +1,21 @@
+id: asset-path-traversal
+title: 资源路径可逃出根目录
+language: python
+test_framework: pytest
+issue: >-
+  asset_path 只接受相对路径，返回解析后的根目录内路径。绝对路径或经过
+  .. 解析后逃出根目录的路径应抛出 ValueError。当前父目录路径可以逃出根目录。
+repo_path: repo
+public_test_command: python -m pytest tests -q
+full_test_command: python -m pytest tests ../grader_tests -q
+grader_test_path: grader_tests
+timeout_seconds: 120
+allowed_edit_paths:
+  - src/
+protected_paths:
+  - tests/
+  - ../grader_tests/
+  - ../reference/
+  - ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED

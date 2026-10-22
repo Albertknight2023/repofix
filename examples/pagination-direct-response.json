@@ -1,0 +1,22 @@
+{
+  "diagnosis": {
+    "status": "hypothesis",
+    "summary": "page_size 为 0 时，分页函数在参数校验前执行了除法。",
+    "root_cause": "paginate 先计算 total_pages，以 page_size 为除数；对非正 page_size 的校验缺失。",
+    "target_file": "src/pagination.py",
+    "target_symbol": "paginate",
+    "confidence": 0.95,
+    "evidence_ids": ["F1", "L1", "S1"],
+    "next_step": "在计算 total_pages 前校验 page_size。"
+  },
+  "repair": {
+    "status": "patch",
+    "edit_kind": "snippet",
+    "target_file": "src/pagination.py",
+    "target_symbol": "paginate",
+    "old_snippet": "    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "new_snippet": "    if page_size <= 0:\n        raise ValueError('page_size must be greater than 0')\n    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "explanation": "先校验非正 page_size，避免除零。",
+    "evidence_ids": ["F1", "S1"]
+  }
+}

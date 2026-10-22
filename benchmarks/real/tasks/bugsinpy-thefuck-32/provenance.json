@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "thefuck",
+  "bug_id": 32,
+  "upstream_url": "https://github.com/nvbn/thefuck",
+  "buggy_commit": "cb33c912e5f2f4c2da6b70d708ff0437bfcd3b94",
+  "fixed_commit": "25cc98a21a3450a046caf418f08713c82a290805",
+  "declared_python_version": "3.7.0",
+  "upstream_trigger": "pytest tests/rules/test_ls_lah.py::test_match",
+  "benchmark_status": "ready_public_and_holdout_audited",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

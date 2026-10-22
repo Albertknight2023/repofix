@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "thefuck",
+  "bug_id": 18,
+  "upstream_url": "https://github.com/nvbn/thefuck",
+  "buggy_commit": "b65a9a0a4fd9bef394b45a1d367d29aa1e1c403e",
+  "fixed_commit": "c3b1ba763708b8faaaf55717c436c4cd4c57a7ea",
+  "declared_python_version": "3.7.0",
+  "upstream_trigger": "pytest tests/rules/test_sudo.py::test_not_match",
+  "benchmark_status": "candidate_not_yet_reproduced",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

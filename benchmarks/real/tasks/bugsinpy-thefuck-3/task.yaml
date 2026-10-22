@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-3
+title: 'BugsInPy thefuck #3'
+language: python
+test_framework: pytest
+issue: fish 版本查询应读取 fish --version 输出并解析版本号，而不是执行内置变量查询导致检测失败。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_info
+full_test_command: python -m pytest -p pytest_mock tests/shells/test_fish.py::TestFish::test_info
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/shells/fish.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

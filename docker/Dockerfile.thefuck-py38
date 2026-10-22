@@ -1,0 +1,11 @@
+FROM repofix-pytest:py38
+
+# Test-only dependencies for the curated historical thefuck tasks. The
+# execution runner still disables networking and mounts task repos read-only.
+RUN python -m pip install --no-cache-dir \
+    "psutil==5.9.8" \
+    "colorama==0.4.6" \
+    "pyte==0.8.2" \
+    "mock==5.1.0" \
+    "pytest-mock==3.10.0"
+COPY docker/thefuck_sitecustomize.py /opt/repofix/sitecustomize.py

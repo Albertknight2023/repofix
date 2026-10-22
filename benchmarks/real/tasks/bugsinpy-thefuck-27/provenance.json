@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "thefuck",
+  "bug_id": 27,
+  "upstream_url": "https://github.com/nvbn/thefuck",
+  "buggy_commit": "bc6b107066d3f1e60b4cfcaa8cf6399e98cf1b1c",
+  "fixed_commit": "1becd92b126a368d6e7d93aa8eea209414ce4aa2",
+  "declared_python_version": "3.7.0",
+  "upstream_trigger": "pytest tests/rules/test_open.py::test_get_new_command",
+  "benchmark_status": "ready_public_and_holdout_audited",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

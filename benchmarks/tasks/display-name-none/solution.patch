@@ -1,0 +1,10 @@
+--- a/src/profile.py
++++ b/src/profile.py
+@@ -2,5 +2,7 @@
+ 
+ 
+ def display_name(name: str | None) -> str:
++    if name is None:
++        return "Guest"
+     cleaned = name.strip()
+     return cleaned or "Guest"

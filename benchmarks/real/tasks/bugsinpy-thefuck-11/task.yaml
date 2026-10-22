@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-11
+title: 'BugsInPy thefuck #11'
+language: python
+test_framework: pytest
+issue: git push 修复建议应正确处理原命令中的 --set-upstream 或 -u 参数，避免在新命令中重复拼接。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_git_push.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_git_push.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/git_push.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

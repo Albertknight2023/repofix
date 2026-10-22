@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-10
+title: 'BugsInPy thefuck #10'
+language: python
+test_framework: pytest
+issue: man 页面不存在时，应优先建议对目标命令使用 --help，而不是给出不存在的 man 页面候选。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_man.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_man.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/man.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

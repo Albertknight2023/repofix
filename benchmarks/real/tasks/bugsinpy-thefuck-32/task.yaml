@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-32
+title: 'BugsInPy thefuck #32'
+language: python
+test_framework: pytest
+issue: ls 规则应只匹配 ls 命令或无选项的 ls 参数，不应误匹配其他包含 ls 的命令。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_ls_lah.py::test_match
+full_test_command: python -m pytest tests/rules/test_ls_lah.py::test_match ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/ls_lah.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

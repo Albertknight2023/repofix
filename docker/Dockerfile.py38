@@ -1,0 +1,15 @@
+FROM python:3.8-slim
+
+# Reproduction profile for selected older BugsInPy projects. Pin this image
+# after qualification; do not install dependencies at test-execution time.
+RUN python -m pip install --no-cache-dir \
+    "pytest>=7,<8" "nose==1.3.7" "six>=1.15,<2" \
+    "decorator>=4.4,<6" "future>=0.17,<1" "python_toolbox>=0.9,<1"
+COPY src/repofix/__init__.py /opt/repofix/repofix/__init__.py
+COPY src/repofix/execution/__init__.py /opt/repofix/repofix/execution/__init__.py
+COPY src/repofix/execution/pytest_capture.py /opt/repofix/repofix/execution/pytest_capture.py
+
+ENV PYTHONPATH=/opt/repofix \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUTF8=1
+WORKDIR /workspace/repo

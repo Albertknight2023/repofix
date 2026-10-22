@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "tqdm",
+  "bug_id": 1,
+  "upstream_url": "https://github.com/tqdm/tqdm",
+  "buggy_commit": "8cc777fe8401a05d07f2c97e65d15e4460feab88",
+  "fixed_commit": "c0dcf39b046d1b4ff6de14ac99ad9a1b10487512",
+  "declared_python_version": "3.6.9",
+  "upstream_trigger": "python3 -m pytest tqdm/tests/tests_contrib.py::test_enumerate",
+  "benchmark_status": "reproduced_buggy_failed_fixed_passed",
+  "trigger_regression": "The upstream fixed commit's new start=42 assertion was backported into the public test.",
+  "reference_patch_visible_to_agent": false
+}

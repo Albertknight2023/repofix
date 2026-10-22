@@ -1,0 +1,21 @@
+id: setting-key-casefold
+title: 配置键规范化缺少大小写折叠
+language: python
+test_framework: pytest
+issue: >-
+  normalize_key 应去掉键名首尾空白并进行 Unicode 大小写折叠；get_setting
+  使用规范化后的键查询配置。当前含大写字母的输入不能稳定查到设置。
+repo_path: repo
+public_test_command: python -m pytest tests -q
+full_test_command: python -m pytest tests ../grader_tests -q
+grader_test_path: grader_tests
+timeout_seconds: 120
+allowed_edit_paths:
+  - src/
+protected_paths:
+  - tests/
+  - ../grader_tests/
+  - ../reference/
+  - ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED

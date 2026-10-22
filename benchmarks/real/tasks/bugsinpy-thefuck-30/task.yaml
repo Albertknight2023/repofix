@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-30
+title: 'BugsInPy thefuck #30'
+language: python
+test_framework: pytest
+issue: 只有设置了编辑器且错误信息指向真实存在的文件时，fix_file 规则才应匹配。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest -p pytest_mock tests/rules/test_fix_file.py::test_not_file
+full_test_command: python -m pytest -p pytest_mock tests/rules/test_fix_file.py::test_not_file ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/fix_file.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

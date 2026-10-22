@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-18
+title: 'BugsInPy thefuck #18'
+language: python
+test_framework: pytest
+issue: 已经以 sudo 开头的命令不应再次匹配 sudo 修复规则。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_sudo.py::test_not_match
+full_test_command: python -m pytest tests/rules/test_sudo.py::test_not_match ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/sudo.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

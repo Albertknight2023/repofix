@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "thefuck",
+  "bug_id": 21,
+  "upstream_url": "https://github.com/nvbn/thefuck",
+  "buggy_commit": "71dc2666ccf62e653291d9a7a08e2c6c3320425b",
+  "fixed_commit": "213791d3c2af379ffa37a140735998736b41912e",
+  "declared_python_version": "3.7.0",
+  "upstream_trigger": "pytest tests/rules/test_git_fix_stash.py::test_not_match",
+  "benchmark_status": "ready_public_and_holdout_audited",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

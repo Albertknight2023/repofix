@@ -1,0 +1,8 @@
+--- a/thefuck/rules/git_diff_staged.py
++++ b/thefuck/rules/git_diff_staged.py
+@@ -10,4 +10,4 @@
+ 
+ @utils.git_support
+ def get_new_command(command, settings):
+-    return '{} --staged'.format(command.script)
++    return command.script.replace(' diff', ' diff --staged')

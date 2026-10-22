@@ -1,0 +1,8 @@
+--- a/src/key_utils.py
++++ b/src/key_utils.py
+@@ -2,4 +2,4 @@
+ 
+ 
+ def normalize_key(key: str) -> str:
+-    return key.strip()
++    return key.strip().casefold()

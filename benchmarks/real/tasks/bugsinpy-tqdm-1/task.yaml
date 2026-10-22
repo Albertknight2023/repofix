@@ -1,0 +1,23 @@
+id: bugsinpy-tqdm-1
+title: 'BugsInPy tqdm #1'
+language: python
+test_framework: pytest
+issue: >-
+  tenumerate 是带进度条的 enumerate。例如遍历 ["a", "b"] 并设置 start=42 时，
+  预期依次得到 (42, "a")、(43, "b")；当前版本却在非零起始值下报错，无法正常返回结果。
+  修复后应支持指定起始编号，同时保持默认编号和进度条显示正常。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tqdm/tests/tests_contrib.py::test_enumerate
+full_test_command: python -m pytest tqdm/tests/tests_contrib.py::test_enumerate ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- tqdm/contrib/__init__.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:py38

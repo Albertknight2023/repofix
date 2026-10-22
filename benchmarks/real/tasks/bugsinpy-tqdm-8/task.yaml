@@ -1,0 +1,21 @@
+id: bugsinpy-tqdm-8
+title: 'BugsInPy tqdm #8'
+language: python
+test_framework: pytest
+issue: Custom bar_format containing {bar} should format its original left and right
+  fragments correctly, including non-default width and labels.
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tqdm/tests/tests_tqdm.py::test_format_meter
+full_test_command: python -m pytest tqdm/tests/tests_tqdm.py::test_format_meter ../grader_tests
+  -q
+timeout_seconds: 120
+allowed_edit_paths:
+- tqdm/_tqdm.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:tqdm-py38

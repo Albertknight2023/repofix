@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-21
+title: 'BugsInPy thefuck #21'
+language: python
+test_framework: pytest
+issue: 输入只有 git 或缺少 stash 子命令时，stash 规则应返回不匹配而不是访问不存在的参数。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_git_fix_stash.py::test_not_match
+full_test_command: python -m pytest tests/rules/test_git_fix_stash.py::test_not_match
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/git_fix_stash.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

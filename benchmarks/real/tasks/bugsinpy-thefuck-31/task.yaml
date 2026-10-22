@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-31
+title: 'BugsInPy thefuck #31'
+language: python
+test_framework: pytest
+issue: git diff --staged 修复应将 --staged 插入 diff 后面，保持原命令其他参数顺序。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_git_diff_staged.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_git_diff_staged.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/git_diff_staged.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

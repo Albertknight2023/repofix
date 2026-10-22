@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "PySnooper",
+  "bug_id": 3,
+  "upstream_url": "https://github.com/cool-RR/PySnooper",
+  "buggy_commit": "6e3d797be3fa0a746fb5b1b7c7fea78eb926c208",
+  "fixed_commit": "15555ed760000b049aff8fecc79d29339c1224c3",
+  "declared_python_version": "3.8.1",
+  "upstream_trigger": "pytest -q -s tests/test_pysnooper.py::test_file_output",
+  "benchmark_status": "reproduced_buggy_failed_fixed_passed",
+  "upstream_trigger_test_backported": true,
+  "reference_patch_visible_to_agent": false
+}

@@ -1,0 +1,21 @@
+id: pagination-zero-page-size
+title: 分页函数未校验非正数 page_size
+language: python
+test_framework: pytest
+issue: >-
+  paginate 在 page_size 为 0 时抛出 ZeroDivisionError。page_size 小于或等于 0
+  都属于非法输入，应抛出消息明确的 ValueError，同时保持其他分页行为不变。
+repo_path: repo #
+public_test_command: python -m pytest tests -q
+full_test_command: python -m pytest tests ../grader_tests -q
+grader_test_path: grader_tests #
+timeout_seconds: 120
+allowed_edit_paths:
+  - src/
+protected_paths:
+  - tests/
+  - ../grader_tests/
+  - ../reference/
+  - ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED

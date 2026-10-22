@@ -1,0 +1,13 @@
+{
+  "dataset": "BugsInPy",
+  "project": "tqdm",
+  "bug_id": 3,
+  "upstream_url": "https://github.com/tqdm/tqdm",
+  "buggy_commit": "c2599e3cd6087429f48bae34347ec5d2473c8392",
+  "fixed_commit": "73962a47026dd980ac0758820efc9c41cbf938e0",
+  "declared_python_version": "3.6.9",
+  "upstream_trigger": "python3 -m pytest tqdm/tests/tests_tqdm.py::test_bool",
+  "benchmark_status": "reproduced_but_excluded_requires_new_method_insertion",
+  "trigger_regression": "The upstream fixed commit's generator truth-value assertions were backported into the public test.",
+  "reference_patch_visible_to_agent": false
+}

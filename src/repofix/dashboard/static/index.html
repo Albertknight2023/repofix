@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RepoFix · Repair Observatory</title>
+  <link rel="stylesheet" href="/dashboard.css">
+  <script src="/dashboard.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand"><div class="brand-mark">R<span>/</span>F</div><div class="brand-copy">REPOFIX<br><small>REPAIR OBSERVATORY</small></div></div>
+      <div class="side-label">WORKSPACE / 01</div>
+      <nav>
+        <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span> 总览 <span>01</span></a>
+        <a class="nav-link" href="#workbench"><span class="nav-icon">⌘</span> 任务工作台 <span>02</span></a>
+        <a class="nav-link" href="#evidence"><span class="nav-icon">◇</span> 证据与补丁 <span>03</span></a>
+        <a class="nav-link" href="#evaluation"><span class="nav-icon">▤</span> 实验评测 <span>04</span></a>
+      </nav>
+      <div class="sidebar-bottom"><div class="live-dot"></div><div><strong>LOCAL / READ ONLY</strong><small>结果可查看 · 模型不在网页中调用</small></div></div>
+    </aside>
+
+    <main id="overview" class="main-content">
+      <header class="topbar"><span>RESEARCH CONSOLE <b>·</b> 2026</span><span class="topbar-right">PYTHON REPAIR SYSTEM <i></i> 127.0.0.1</span></header>
+      <section class="hero">
+        <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-line"></span> SOFTWARE REPAIR / EVIDENCE-LED</div><h1>让每一次修复<br><em>都有证据。</em></h1><p>从真实缺陷复现，到 Agent 定位、补丁验证和独立验收。这里呈现完整的实验轨迹，而不只是一句“测试通过”。</p><a href="#workbench" class="hero-link">进入任务工作台 <span>↗</span></a></div>
+        <div class="hero-graphic" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="core">R<span>F</span></div><span class="orbit-label label-top">01 / TRACE</span><span class="orbit-label label-bottom">02 / VERIFY</span></div>
+      </section>
+
+      <section class="metrics" aria-label="项目概览">
+        <div class="metric"><span>READY TASKS</span><strong id="metric-tasks">—</strong><small>已登记任务</small></div>
+        <div class="metric"><span>REAL DEFECTS</span><strong id="metric-real">—</strong><small>BugsInPy 已复现</small></div>
+        <div class="metric"><span>REPAIR RUNS</span><strong id="metric-runs">—</strong><small>本地执行记录</small></div>
+        <div class="metric metric-accent"><span>EVALUATIONS</span><strong id="metric-evals">—</strong><small>独立评测文件</small></div>
+      </section>
+
+      <section id="workbench" class="section-block workbench">
+        <div class="section-heading"><div><div class="section-kicker">01 / TASK WORKBENCH</div><h2>任务工作台</h2></div><p>选择缺陷，查看实验入口和最近运行记录。</p></div>
+        <div class="workbench-grid">
+          <div class="task-column"><div class="column-head"><span>BENCHMARK QUEUE</span><span id="task-count">00</span></div><div id="task-list" class="task-list"><div class="empty-state">正在读取任务…</div></div></div>
+          <div class="detail-column"><div class="detail-upper"><div class="detail-label">SELECTED ISSUE <span>↗</span></div><h3 id="selected-task-title">等待选择任务</h3><div class="detail-meta"><span id="selected-task-suite">—</span><span id="selected-task-category">—</span></div><p id="selected-task-note">真实缺陷将标明数据来源与复现状态；开发任务只用于流程检查。</p><button id="copy-command" class="outline-button" type="button">复制容器运行命令 <span>↗</span></button></div><div class="run-picker"><label for="run-select">运行记录 / RUN HISTORY</label><select id="run-select"><option value="">暂无记录</option></select></div></div>
+        </div>
+      </section>
+
+      <section id="evidence" class="section-block evidence-section">
+        <div class="section-heading"><div><div class="section-kicker">02 / REPAIR TRACE</div><h2>证据链与补丁</h2></div><div id="trace-status" class="status-pill">等待运行记录</div></div>
+        <div class="trace-grid"><div class="trace-column"><div class="column-head"><span>EXECUTION TRACE</span><span>01 — 04</span></div><div id="trace-steps" class="trace-steps"><div class="empty-state">选择一条运行记录以查看流程。</div></div><div class="evidence-box"><div class="column-head"><span>GROUNDED EVIDENCE</span><span id="evidence-count">00</span></div><div id="evidence-list" class="evidence-list"><div class="empty-state">暂无证据。</div></div></div></div><div class="patch-column"><div class="column-head"><span>CANDIDATE.PATCH</span><span id="patch-label">NO DIFF</span></div><div id="patch-view" class="patch-view"><div class="empty-state">运行成功后会在这里显示统一 diff。</div></div><div id="patch-footer" class="patch-footer">公开测试和隐藏验收分别记录；公开通过不等于最终正确。</div></div></div>
+      </section>
+
+      <section id="evaluation" class="section-block evaluation-section">
+        <div class="section-heading"><div><div class="section-kicker">03 / BENCHMARK RESULTS</div><h2>实验评测</h2></div><p>同一任务集与预算下比较；参考补丁只用于链路自检。</p></div>
+        <div class="evaluation-card"><div class="eval-top"><div><div class="eval-overline">LATEST EVALUATION</div><h3 id="eval-title">等待评测数据</h3></div><span id="eval-badge" class="eval-badge">NO DATA</span></div><div id="eval-methods" class="eval-methods"><div class="empty-state">运行 evaluate 命令后，这里会显示汇总结果。</div></div><div id="eval-note" class="eval-note">现有少量真实缺陷只验证评测链路，不构成统计性研究结论。</div></div>
+      </section>
+      <footer>REPOFIX / EVIDENCE BEFORE CLAIMS <span>LOCAL RESEARCH BUILD · 2026</span></footer>
+    </main>
+  </div>
+</body>
+</html>

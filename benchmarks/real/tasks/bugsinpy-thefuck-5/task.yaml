@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-5
+title: 'BugsInPy thefuck #5'
+language: python
+test_framework: pytest
+issue: git push 规则只应在输出明确建议 git push --set-upstream 时匹配，避免无关 set-upstream 文本误触发。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_git_push.py::test_match_bitbucket
+full_test_command: python -m pytest tests/rules/test_git_push.py::test_match_bitbucket
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/git_push.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

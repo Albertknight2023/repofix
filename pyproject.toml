@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repofix"
+version = "0.1.0"
+description = "A verifiable multi-agent runtime for Python repository repair"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "PyYAML>=6,<7",
+]
+
+[project.scripts]
+repofix = "repofix.cli:main"
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"repofix.agents.prompts" = ["*.md"]
+"repofix.dashboard.static" = ["*.html", "*.css", "*.js"]
+"repofix.dashboard" = ["web_dist/*.html", "web_dist/assets/*.js", "web_dist/assets/*.css"]

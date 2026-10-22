@@ -1,0 +1,22 @@
+[
+  {
+    "status": "patch",
+    "edit_kind": "snippet",
+    "target_file": "src/pagination.py",
+    "target_symbol": "paginate",
+    "old_snippet": "    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "new_snippet": "    if page_size == -1:\n        raise ValueError('page_size must be positive')\n    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "explanation": "仅处理 -1，没有覆盖 0；用于离线演示第一轮公开测试仍失败。",
+    "evidence_ids": ["F1", "S1"]
+  },
+  {
+    "status": "patch",
+    "edit_kind": "snippet",
+    "target_file": "src/pagination.py",
+    "target_symbol": "paginate",
+    "old_snippet": "    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "new_snippet": "    if page_size <= 0:\n        raise ValueError('page_size must be positive')\n    total_pages = (len(items) + page_size - 1) // page_size\n",
+    "explanation": "依据第一轮公开测试反馈，把非正数都在除法前拒绝，同时保持正常分页路径。",
+    "evidence_ids": ["F1", "S1"]
+  }
+]

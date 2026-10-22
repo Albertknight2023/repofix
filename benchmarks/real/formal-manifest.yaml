@@ -1,0 +1,85 @@
+version: 1
+suite: bugsinpy-real20-formal
+language: python
+test_framework: pytest
+tasks:
+  - id: bugsinpy-tqdm-1
+    config: tasks/bugsinpy-tqdm-1/task.yaml
+    category: iteration-index
+    status: ready
+  - id: bugsinpy-tqdm-4
+    config: tasks/bugsinpy-tqdm-4/task.yaml
+    category: progress-formatting
+    status: ready
+  - id: bugsinpy-tqdm-5
+    config: tasks/bugsinpy-tqdm-5/task.yaml
+    category: disabled-iterator-state
+    status: ready
+  - id: bugsinpy-tqdm-6
+    config: tasks/bugsinpy-tqdm-6/task.yaml
+    category: iterator-total
+    status: ready
+  - id: bugsinpy-tqdm-7
+    config: tasks/bugsinpy-tqdm-7/task.yaml
+    category: cli-argument-parsing
+    status: ready
+  - id: bugsinpy-tqdm-8
+    config: tasks/bugsinpy-tqdm-8/task.yaml
+    category: progress-formatting
+    status: ready
+  - id: bugsinpy-PySnooper-3
+    config: tasks/bugsinpy-PySnooper-3/task.yaml
+    category: file-output
+    status: ready
+  - id: bugsinpy-thefuck-1
+    config: tasks/bugsinpy-thefuck-1/task.yaml
+    category: command-parsing
+    status: ready
+  - id: bugsinpy-thefuck-3
+    config: tasks/bugsinpy-thefuck-3/task.yaml
+    category: shell-integration
+    status: ready
+  - id: bugsinpy-thefuck-5
+    config: tasks/bugsinpy-thefuck-5/task.yaml
+    category: git-command-generation
+    status: ready
+  - id: bugsinpy-thefuck-10
+    config: tasks/bugsinpy-thefuck-10/task.yaml
+    category: command-parsing
+    status: ready
+  - id: bugsinpy-thefuck-14
+    config: tasks/bugsinpy-thefuck-14/task.yaml
+    category: shell-aliases
+    status: ready
+  - id: bugsinpy-thefuck-21
+    config: tasks/bugsinpy-thefuck-21/task.yaml
+    category: command-matching
+    status: ready
+  - id: bugsinpy-thefuck-22
+    config: tasks/bugsinpy-thefuck-22/task.yaml
+    category: empty-sequence
+    status: ready
+  - id: bugsinpy-thefuck-25
+    config: tasks/bugsinpy-thefuck-25/task.yaml
+    category: command-generation
+    status: ready
+  - id: bugsinpy-thefuck-26
+    config: tasks/bugsinpy-thefuck-26/task.yaml
+    category: command-generation
+    status: ready
+  - id: bugsinpy-thefuck-27
+    config: tasks/bugsinpy-thefuck-27/task.yaml
+    category: command-generation
+    status: ready
+  - id: bugsinpy-thefuck-30
+    config: tasks/bugsinpy-thefuck-30/task.yaml
+    category: file-path-validation
+    status: ready
+  - id: bugsinpy-thefuck-31
+    config: tasks/bugsinpy-thefuck-31/task.yaml
+    category: git-command-generation
+    status: ready
+  - id: bugsinpy-thefuck-32
+    config: tasks/bugsinpy-thefuck-32/task.yaml
+    category: command-matching
+    status: ready

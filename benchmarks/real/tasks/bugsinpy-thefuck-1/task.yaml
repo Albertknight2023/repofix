@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-1
+title: 'BugsInPy thefuck #1'
+language: python
+test_framework: pytest
+issue: pip 输出的未知子命令或建议命令含数字、连字符等非小写字母时，get_new_command 应提取引号中的完整名称并给出正确替换命令；原实现只匹配小写字母。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_pip_unknown_command.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/pip_unknown_command.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38

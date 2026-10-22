@@ -1,0 +1,20 @@
+id: bugsinpy-thefuck-27
+title: 'BugsInPy thefuck #27'
+language: python
+test_framework: pytest
+issue: open 规则为未带协议的地址补充 http:// 时，不应错误截断原命令中的 URL。
+repo_path: repo
+grader_test_path: grader_tests
+public_test_command: python -m pytest tests/rules/test_open.py::test_get_new_command
+full_test_command: python -m pytest tests/rules/test_open.py::test_get_new_command
+  ../grader_tests -q
+timeout_seconds: 120
+allowed_edit_paths:
+- thefuck/rules/open.py
+protected_paths:
+- ../grader_tests
+- ../reference
+- ../solution.patch
+expected_initial_status: FAILED
+expected_reference_status: PASSED
+container_image: repofix-pytest:thefuck-py38
