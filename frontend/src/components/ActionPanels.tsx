@@ -1,22 +1,26 @@
 import { useState } from 'react'
 import type { ExperimentOptions, GradeResult, Job, PatchReview, RunOptions, RunSummary, TaskSummary } from '../types'
 
-const defaultOptions: RunOptions = { workflow: 'two-agent', context: 'ast-callgraph', max_tokens: 6000 }
+const defaultOptions: RunOptions = { workflow: 'two-agent', engine: 'legacy', context: 'ast-callgraph', max_tokens: 6000 }
 
 function OptionFields({ options, onChange }: { options: RunOptions; onChange: (value: RunOptions) => void }) {
-  return <div className="action-fields">
+  return <div className="action-fields engine-options">
     <label>协作方式<select value={options.workflow} onChange={event => onChange({ ...options, workflow: event.target.value as RunOptions['workflow'] })}>
       <option value="two-agent">双 Agent · 单候选基线</option>
       <option value="single-agent">单 Agent · 直接修复基线</option>
-      <option value="competitive">双候选竞争 · 固定生成两份</option>
+      <option value="competitive">候选竞争 · 争取两份不同补丁</option>
       <option value="dynamic">反馈驱动 · 必要时生成第二份</option>
     </select></label>
+    <label>执行引擎<select value={options.engine} onChange={event => onChange({ ...options, engine: event.target.value as RunOptions['engine'] })}>
+      <option value="legacy">原有调度 · 历史实验基线</option>
+      <option value="langgraph">LangGraph · 状态图调度</option>
+    </select><small>只改变编排方式，不更换模型或测试规则</small></label>
     <label>代码上下文<select value={options.context} onChange={event => onChange({ ...options, context: event.target.value as RunOptions['context'] })}>
       <option value="ast-callgraph">AST 与调用图</option><option value="traceback-only">仅错误堆栈</option>
     </select></label>
     <label>每次模型回复上限<input type="number" min={512} max={12000} step={1} value={options.max_tokens}
       onChange={event => onChange({ ...options, max_tokens: Number(event.target.value) })} /><small>Token · 不是整个实验的费用上限</small></label>
-    <p className="mode-explanation">{options.workflow === 'competitive' ? '最多 3 次模型调用（定位 1 次、修复 2 次）；各候选独立测试，择优保存。' : options.workflow === 'dynamic' ? '第一份补丁未通过公开测试、被拒绝或有审查提醒时，才请求第二份。' : '基线模式只生成一份候选补丁。'}</p>
+    <p className="mode-explanation">{options.workflow === 'competitive' ? '最多 5 次模型调用（定位 1 次、修复最多 4 次），争取两份不同且可评测的补丁；各候选独立测试，择优保存。' : options.workflow === 'dynamic' ? '第一份补丁未通过公开测试、被拒绝或有审查提醒时，才请求第二份。' : '基线模式只生成一份候选补丁。'}</p>
   </div>
 }
 

@@ -46,6 +46,7 @@ export type Job = {
 
 export type RunOptions = {
   workflow: 'two-agent' | 'single-agent' | 'competitive' | 'dynamic'
+  engine: 'legacy' | 'langgraph'
   context: 'ast-callgraph' | 'traceback-only'
   max_tokens: number
 }

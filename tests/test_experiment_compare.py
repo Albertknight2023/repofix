@@ -64,6 +64,7 @@ def test_cli_compares_saved_evaluations_without_model(tmp_path: Path, capsys) ->
     {"model_config": {"model": "scripted-mock", "max_completion_tokens_per_call": 6000, "thinking_mode": "disabled"}},
     {"implementation_fingerprint": "implementation-v2"},
     {"dataset_fingerprint": "dataset-v2"},
+    {"execution_engine": "langgraph", "execution_engine_version": "1.2.17"},
 ])
 def test_compare_rejects_unfair_inputs(tmp_path: Path, change: dict[str, object]) -> None:
     first = _write(tmp_path / "first.json", "baseline", ("passed", "failed"))

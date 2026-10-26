@@ -7,7 +7,8 @@ import os
 import sys
 from pathlib import Path
 
-from repofix.agents.workflow import run_locator_task, run_repair_task
+from repofix.agents.engine import repair_runner
+from repofix.agents.workflow import run_locator_task
 from repofix.benchmarks.loader import load_task
 from repofix.grader import grade_saved_patch
 from repofix.execution.docker_runner import DEFAULT_IMAGE, DockerTestRunner
@@ -49,6 +50,7 @@ def _parser() -> argparse.ArgumentParser:
         )
         if command_name == "repair":
             command.add_argument("--workflow", choices=("two-agent", "single-agent", "competitive", "dynamic"), default="two-agent")
+            command.add_argument("--engine", choices=("legacy", "langgraph"), default="legacy")
             command.add_argument("--context", choices=("ast-callgraph", "traceback-only"), default="ast-callgraph")
             command.add_argument("--mock-repair-response", type=Path)
             command.add_argument(
@@ -104,6 +106,7 @@ def _parser() -> argparse.ArgumentParser:
         help="run only this registered ready task (repeatable; partial experiment)",
     )
     experiment.add_argument("--workflow", choices=("two-agent", "single-agent", "competitive", "dynamic"), default="two-agent")
+    experiment.add_argument("--engine", choices=("legacy", "langgraph"), default="legacy")
     experiment.add_argument("--context", choices=("ast-callgraph", "traceback-only"), default="ast-callgraph")
     experiment.add_argument("--output-root", type=Path, default=Path("runs/experiments"))
     compare = subcommands.add_parser("compare", help="compare completed full experiments without model calls")
@@ -255,6 +258,7 @@ def main(argv: list[str] | None = None) -> int:
                 output_root=args.output_root, backend=args.runner,
                 image=args.image, limit=args.limit, provider=args.provider,
                 workflow_mode=args.workflow, context_mode=args.context,
+                execution_engine=args.engine,
                 task_ids=tuple(args.task_id) if args.task_id else None,
                 max_model_calls=args.max_model_calls,
                 formal=args.formal,
@@ -320,7 +324,7 @@ def main(argv: list[str] | None = None) -> int:
                 repair_client = _mock_repair_client(args.mock_repair_response)
             else:
                 repair_client = client
-            repair_run = run_repair_task(
+            repair_run = repair_runner(args.engine)(
                 task, client, repair_client, test_runner=test_runner,
                 workflow_mode=args.workflow, context_mode=args.context,
             )
@@ -342,6 +346,7 @@ def main(argv: list[str] | None = None) -> int:
         hypothesis = repair_run.locator_result.hypothesis
         payload = {
             "task_id": repair_run.task_id,
+            "execution_engine": repair_run.execution_engine,
             "initial_public_test_status": (
                 repair_run.initial_public_test_status.value
             ),

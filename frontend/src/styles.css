@@ -40,3 +40,6 @@
   .stages{grid-template-columns:repeat(2,minmax(0,1fr))}.stage:nth-child(2){border-right:0}.stage:nth-child(-n+2){border-bottom:1px solid #e7edf2}.subheading{padding:16px}.evaluation-toolbar{padding:15px;flex-wrap:wrap}.evaluation-toolbar select{min-width:0;flex:1}.eval-class{margin-left:0}.evaluation-warning{margin:14px 14px 0}.method-list{padding:12px 14px}.method-row{grid-template-columns:1fr 50px;gap:7px}.method-row>div:first-child{grid-column:1/-1}.result-table-wrap{margin:0 14px 15px}.validation-note{flex-wrap:wrap}.validation-note small{margin-left:14px;max-width:none;text-align:left}.footer{display:block;line-height:2}
   .action-body{padding:16px}.action-fields,.experiment-launcher .action-fields{grid-template-columns:1fr;gap:11px}.action-fields label{gap:5px}.action-footer{align-items:stretch}.action-footer .button{flex:1 1 140px}.experiment-launcher .action-footer>span{flex-basis:100%}.protocol-panel{padding:14px}.formal-metrics{grid-template-columns:1fr;margin:0 14px 15px}
 }
+
+.action-panel .action-fields.engine-options{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:580px){.action-panel .action-fields.engine-options{grid-template-columns:1fr}}

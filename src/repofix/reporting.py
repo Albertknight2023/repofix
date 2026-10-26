@@ -190,6 +190,7 @@ def build_repair_report(
         "run_id": run_id,
         "created_at_utc": created_at_utc,
         "workflow_mode": run.workflow_mode,
+        "execution_engine": run.execution_engine,
         "context_mode": run.context_mode,
         "task": {
             "id": task.id,

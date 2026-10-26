@@ -70,6 +70,8 @@ def compare_evaluations(paths: tuple[Path, ...]) -> dict[str, object]:
             model.get("reasoning_effort"),
             model.get("timeout_seconds"),
             None if nonbinding_cap else cap,
+            document.get("execution_engine", "legacy"),
+            document.get("execution_engine_version"),
             document.get("experiment_protocol", "legacy"),
             model.get("max_submission_attempts"),
             document["implementation_fingerprint"],
@@ -79,7 +81,7 @@ def compare_evaluations(paths: tuple[Path, ...]) -> dict[str, object]:
         if baseline is None:
             baseline = identity
         elif identity != baseline:
-            raise ValueError("experiments have different task sets, backend, provider or model budget")
+            raise ValueError("experiments have different task sets, backend, provider, engine or model budget")
         loaded.append((path.resolve(), document, method, by_task))
 
     rows: list[dict[str, object]] = []
@@ -93,6 +95,8 @@ def compare_evaluations(paths: tuple[Path, ...]) -> dict[str, object]:
             "method": method,
             "workflow_mode": document.get("workflow_mode"),
             "context_mode": document.get("context_mode"),
+            "execution_engine": document.get("execution_engine", "legacy"),
+            "execution_engine_version": document.get("execution_engine_version"),
             "evaluation_path": str(path),
             "tasks": len(by_task),
             "passed": statuses["passed"],

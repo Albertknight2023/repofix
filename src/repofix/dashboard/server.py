@@ -155,17 +155,20 @@ def make_handler(
             for item in load_manifest(manifest_path).tasks if item.status == "ready"
         }
 
-    def run_options(data: dict[str, object]) -> tuple[str, str, int]:
+    def run_options(data: dict[str, object]) -> tuple[str, str, str, int]:
         workflow = data.get("workflow", "two-agent")
+        engine = data.get("engine", "legacy")
         context = data.get("context", "ast-callgraph")
         max_tokens = data.get("max_tokens", 6000)
-        if workflow not in {"two-agent", "single-agent", "competitive", "dynamic"}:
+        if not isinstance(workflow, str) or workflow not in {"two-agent", "single-agent", "competitive", "dynamic"}:
             raise ValueError("workflow 必须是 two-agent、single-agent、competitive 或 dynamic")
-        if context not in {"ast-callgraph", "traceback-only"}:
+        if not isinstance(engine, str) or engine not in {"legacy", "langgraph"}:
+            raise ValueError("engine 必须是 legacy 或 langgraph")
+        if not isinstance(context, str) or context not in {"ast-callgraph", "traceback-only"}:
             raise ValueError("context 必须是 ast-callgraph 或 traceback-only")
         if type(max_tokens) is not int or not 512 <= max_tokens <= 12000:
             raise ValueError("max_tokens 必须在 512 到 12000 之间")
-        return workflow, context, max_tokens
+        return workflow, engine, context, max_tokens
 
     class DashboardHandler(BaseHTTPRequestHandler):
         def _send(self, status: int, data: bytes, content_type: str) -> None:
@@ -278,19 +281,19 @@ def make_handler(
                     raise ValueError("请求体必须是 JSON 对象")
                 tasks = ready_tasks()
                 if path == "/api/jobs/repair":
-                    if set(data) - {"task_id", "workflow", "context", "max_tokens"}:
+                    if set(data) - {"task_id", "workflow", "engine", "context", "max_tokens"}:
                         raise ValueError("包含不支持的参数")
                     task_id = data.get("task_id")
                     if not isinstance(task_id, str) or task_id not in tasks:
                         raise ValueError("只能修复已注册的 ready 任务")
-                    workflow, context, max_tokens = run_options(data)
+                    workflow, engine, context, max_tokens = run_options(data)
                     args = [
                         "repair", "--task", str(tasks[task_id]), "--provider", "api",
                         "--runner", "docker", "--output-root", str(runs_root),
-                        "--workflow", workflow, "--context", context,
+                        "--workflow", workflow, "--engine", engine, "--context", context,
                         "--max-tokens", str(max_tokens),
                     ]
-                    job = jobs.submit("repair", args, {"task_id": task_id, "workflow": workflow, "context": context}, 900)
+                    job = jobs.submit("repair", args, {"task_id": task_id, "workflow": workflow, "engine": engine, "context": context}, 900)
                 elif path == "/api/jobs/grade":
                     if set(data) != {"task_id", "run_id"}:
                         raise ValueError("验收需要 task_id 和 run_id")
@@ -306,7 +309,7 @@ def make_handler(
                     args = ["grade", "--task", str(tasks[task_id]), "--patch", str(patch), "--runner", "docker"]
                     job = jobs.submit("grade", args, {"task_id": task_id, "run_id": run_id}, 900)
                 else:
-                    if set(data) - {"suite", "method", "workflow", "context", "limit", "max_tokens", "formal", "max_submission_attempts", "max_model_calls"}:
+                    if set(data) - {"suite", "method", "workflow", "engine", "context", "limit", "max_tokens", "formal", "max_submission_attempts", "max_model_calls"}:
                         raise ValueError("包含不支持的参数")
                     suite, method = data.get("suite"), data.get("method")
                     selected = next((path for path in manifests if path.is_file() and load_manifest(path).suite == suite), None)
@@ -316,7 +319,7 @@ def make_handler(
                     limit = data.get("limit")
                     if limit is not None and (type(limit) is not int or not 1 <= limit <= ready_count):
                         raise ValueError("limit 必须在 1 到 ready 任务数之间")
-                    workflow, context, max_tokens = run_options(data)
+                    workflow, engine, context, max_tokens = run_options(data)
                     formal = data.get("formal", False)
                     attempts = data.get("max_submission_attempts", 3)
                     max_calls = data.get("max_model_calls")
@@ -331,7 +334,7 @@ def make_handler(
                     args = [
                         "experiment", "--manifest", str(selected), "--method", method,
                         "--provider", "api", "--runner", "docker",
-                        "--workflow", workflow, "--context", context,
+                        "--workflow", workflow, "--engine", engine, "--context", context,
                         "--max-tokens", str(max_tokens),
                         "--output-root", str(runs_root / "experiments"),
                     ]
@@ -341,7 +344,7 @@ def make_handler(
                         args.extend(["--formal", "--max-submission-attempts", str(attempts)])
                     if max_calls is not None:
                         args.extend(["--max-model-calls", str(max_calls)])
-                    job = jobs.submit("experiment", args, {"suite": suite, "method": method, "workflow": workflow, "context": context, "limit": limit, "formal": formal, "max_model_calls": max_calls}, 900 * (limit or ready_count))
+                    job = jobs.submit("experiment", args, {"suite": suite, "method": method, "workflow": workflow, "engine": engine, "context": context, "limit": limit, "formal": formal, "max_model_calls": max_calls}, 900 * (limit or ready_count))
                 self._json(202, job)
             except (OSError, ValueError) as error:
                 self._json(400, {"error": str(error)[:300]})

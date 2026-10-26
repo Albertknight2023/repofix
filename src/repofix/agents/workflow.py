@@ -59,6 +59,7 @@ class RepairRun:
     schedule: tuple["SchedulingDecision", ...] = ()
     memory_snapshot: dict[str, object] | None = None
     locator_attempts: tuple[LocatorResult, ...] = ()
+    execution_engine: str = "legacy"
 
     @property
     def model_calls(self) -> int:

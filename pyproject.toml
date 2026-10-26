@@ -12,6 +12,9 @@ dependencies = [
     "PyYAML>=6,<7",
 ]
 
+[project.optional-dependencies]
+graph = ["langgraph>=1.0,<2"]
+
 [project.scripts]
 repofix = "repofix.cli:main"
 

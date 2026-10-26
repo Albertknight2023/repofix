@@ -198,12 +198,24 @@ def test_dashboard_job_api_only_accepts_ready_tasks_and_known_options(tmp_path: 
         assert jobs.calls[-1][0] == "repair"
         assert "--runner" in jobs.calls[-1][1] and "docker" in jobs.calls[-1][1]
 
+        status, _ = post("/api/jobs/repair", {"task_id": "bugsinpy-tqdm-1", "engine": "invalid"})
+        assert status == 400
+        status, _ = post("/api/jobs/repair", {"task_id": "bugsinpy-tqdm-1", "engine": "langgraph"})
+        assert status == 202
+        assert jobs.calls[-1][1][jobs.calls[-1][1].index("--engine") + 1] == "langgraph"
+
         status, _ = post("/api/jobs/experiment", {"suite": "bugsinpy-curated-candidates", "method": "trial", "limit": 99})
         assert status == 400
         status, _ = post("/api/jobs/experiment", {"suite": "bugsinpy-curated-candidates", "method": "trial", "limit": 1})
         assert status == 202
         assert jobs.calls[-1][0] == "experiment"
         assert jobs.calls[-1][1][-2:] == ["--limit", "1"]
+        status, _ = post("/api/jobs/experiment", {
+            "suite": "bugsinpy-curated-candidates", "method": "graph-trial",
+            "limit": 1, "engine": "langgraph",
+        })
+        assert status == 202
+        assert jobs.calls[-1][1][jobs.calls[-1][1].index("--engine") + 1] == "langgraph"
         status, _ = post("/api/jobs/experiment", {
             "suite": "bugsinpy-curated-candidates", "method": "formal-trial",
             "limit": 1, "formal": True, "max_submission_attempts": 2,

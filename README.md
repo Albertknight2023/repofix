@@ -2,7 +2,7 @@
 
 RepoFix 是面向 Python 仓库缺陷修复的多 Agent 实验系统。它把 Bug 描述、公开测试失败回溯和 AST／近似调用关系交给定位与修复工作流，在隔离副本中生成补丁，再用公开测试和独立验收测试检查结果。
 
-**当前实现不依赖 LangGraph。** Agent 角色、调度、补丁门槛和评测逻辑由本项目实现；LangGraph 接入列在后续计划中。
+**LangGraph 已作为可选执行引擎接入。** 默认仍使用项目原有调度；两种引擎复用相同的 Agent 角色、补丁门槛和评测逻辑。
 
 ## 能做什么
 
@@ -11,6 +11,7 @@ RepoFix 是面向 Python 仓库缺陷修复的多 Agent 实验系统。它把 Bu
 - 在临时工作区修改代码，并检查改动路径、补丁可应用性、语法和部分可疑修复模式。
 - 在受限 Docker 容器中运行公开 pytest；最终补丁在另一份副本中接受测试。验收测试不进入 Agent 的上下文，也不参与候选选择。
 - 保存补丁、测试状态和模型调用记录，并在本地 React 看板查看。Docker 限制降低运行风险，但不应被视为绝对安全边界。
+- 通过 `--engine legacy|langgraph` 切换原有调度与 LangGraph 状态图调度；`--workflow` 仍独立控制四种协作模式。
 
 ## 四工作流与初步结果
 
@@ -57,6 +58,21 @@ docker build -f docker/Dockerfile.thefuck-py38 -t repofix-pytest:thefuck-py38 .
 
 真实模型需要自行将 `.env.example` 复制为 `.env` 并填入 API Key，然后指定 `--provider api`。`.env`、运行记录和实验生成物均被忽略；请不要把密钥写进命令、源码或提交记录。
 
+### 可选 LangGraph 引擎
+
+安装可选依赖后，可用模拟回复免费试跑；`repair` 和 `experiment` 均接受 `--engine langgraph`，看板的运行表单也可选择执行引擎。
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[graph]"
+.\.venv\Scripts\python.exe -m repofix.cli repair `
+  --task benchmarks/tasks/pagination-zero-page-size/task.yaml `
+  --runner host --provider mock --engine langgraph --workflow dynamic `
+  --mock-response examples/pagination-locator-response.json `
+  --mock-repair-response examples/pagination-repair-sequence.json
+```
+
+图节点负责公开测试准备、诊断、候选生成、验证、条件调度与选择；隐藏验收仍在图外由独立评测器执行。实验文件记录 `execution_engine` 和 LangGraph 版本。当前未启用持久化 checkpoint，也未并行生成候选。上表的 2026-10-22 结果全部属于原有引擎，**不是 LangGraph 效果实验**；接入框架本身不代表通过率提升。
+
 ## 代码结构
 
 - `src/repofix/analysis/`：AST 索引、回溯定位和调用上下文。
@@ -70,4 +86,4 @@ docker build -f docker/Dockerfile.thefuck-py38 -t repofix-pytest:thefuck-py38 .
 
 ## 后续计划
 
-计划增加可选的 LangGraph 编排适配层，将现有定位、修复、公开测试、审查和终止条件映射为图节点及条件边；保持当前原生工作流作为对照，并在相同题集、模型和预算下测试可恢复性与调度开销。**此项尚未实现，也不包含在上表实验条件中。**
+在相同题集、模型、预算与固定依赖版本下，对原有引擎和 LangGraph 引擎进行正式对照；再评估持久化 checkpoint、恢复能力与调度开销。上述能力目前尚未计入已有实验成绩。

@@ -5,11 +5,12 @@ import hashlib
 from collections import Counter
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from importlib.metadata import version as package_version
 from pathlib import Path
 from time import perf_counter
 from uuid import uuid4
 
-from repofix.agents.workflow import run_repair_task
+from repofix.agents.engine import repair_runner
 from repofix.benchmarks.loader import load_tasks
 from repofix.benchmarks.models import TaskSpec
 from repofix.evaluation import audit_task, evaluate_submissions, task_runner
@@ -111,6 +112,7 @@ def run_experiment(
     provider: str = "api",
     workflow_mode: str = "two-agent",
     context_mode: str = "ast-callgraph",
+    execution_engine: str = "legacy",
     task_ids: tuple[str, ...] | None = None,
     max_model_calls: int | None = None,
     formal: bool = False,
@@ -124,6 +126,7 @@ def run_experiment(
         raise ValueError("invalid workflow_mode")
     if context_mode not in {"ast-callgraph", "traceback-only"}:
         raise ValueError("context_mode must be ast-callgraph or traceback-only")
+    runner_function = repair_runner(execution_engine)
     if max_model_calls is not None and max_model_calls < 1:
         raise ValueError("max_model_calls must be positive")
     if not 1 <= max_submission_attempts <= 10:
@@ -186,7 +189,7 @@ def run_experiment(
             attempts_used = attempt_number
             try:
                 runner = task_runner(task, backend, image)
-                repair = run_repair_task(
+                repair = runner_function(
                     task, tracked_locator, tracked_repair, test_runner=runner,
                     workflow_mode=workflow_mode, context_mode=context_mode,
                     retry_feedback=feedback,
@@ -298,6 +301,10 @@ def run_experiment(
     result["provider"] = provider
     result["workflow_mode"] = workflow_mode
     result["context_mode"] = context_mode
+    result["execution_engine"] = execution_engine
+    result["execution_engine_version"] = (
+        package_version("langgraph") if execution_engine == "langgraph" else None
+    )
     result["model_config"] = {
         "model": getattr(locator_client, "model_name", "scripted-mock"),
         "thinking_mode": getattr(locator_client, "thinking_mode", None),
